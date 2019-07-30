@@ -66,7 +66,7 @@ class Account extends Component {
       },
       {
         dataField: "accountCode",
-        text: "Account Code",
+        text: "Code",
         headerClasses: "text-center",
         sort: true,
         classes: "text-center",
@@ -74,7 +74,7 @@ class Account extends Component {
       },
       {
         dataField: "accountName",
-        text: "AccountName",
+        text: "Name",
         headerClasses: "text-center w-50",
         sort: true,
         headerSortingStyle
@@ -234,10 +234,9 @@ class Account extends Component {
             <div className="row">
               <div className="col-12 text-right">
                 <Link to="/account-create" className="linkCustom">
-                  <div className="btn btn-success btn-sm">
-                    <i className="fa fa-plus-circle nav-icon" />
-                    <br />
-                    <h6 className="text-sm-white">New Account</h6>
+                  <div className="col-1 btn btn-outline-success btn-sm">
+                    <i className="fa fa-plus-circle"/>
+                    <h6 className="text-sm-white text-uppercase font-weight-bold ">New</h6>
                   </div>
                 </Link>
               </div>

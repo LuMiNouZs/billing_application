@@ -11,17 +11,21 @@ import 'react-widgets/dist/css/react-widgets.css'
 class AccountCreate extends Component {
   onClickSubmit = formValues => {
     var formData = new FormData();
-    formData.append("accountCode", formValues.accountCode);
-    formData.append("accountName", formValues.accountName);
-    formData.append("price", formValues.price);
-    formData.append("stock", formValues.stock);
-    formData.append("upload_file", formValues.file);
+    formData.append("account_code", formValues.accountCode);
+    formData.append("account_name", formValues.accountName);
+    formData.append("status", formValues.accountStatus);
+    formData.append("type", formValues.accountType);
+    formData.append("telephone", formValues.accountTelephone);
+    formData.append("fax", formValues.accountFax);
+    formData.append("address", formValues.accountAddress);
+    formData.append("description", formValues.accountDescription);
 
-    // this.props.addProduct(this.props.history, formData);
+    this.props.addAccount(this.props.history, formData);
+    
   };
 
   render() {
-    const { handleSubmit, change, dispatch } = this.props;
+    const { handleSubmit, pristine, reset, submitting } = this.props;
     const accountStatus = [ 
       { status: 'Active', value: 1 } ,
       { status: 'inActive', value: 0 },
@@ -52,7 +56,7 @@ class AccountCreate extends Component {
           <div className="container-fluid">
             <div className="row mb-0">
               <div className="col-sm-6">
-                <h1 className="m-0 text-dark">Create Account</h1>
+                <h1 className="m-0 text-dark text-uppercase">Create</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -61,17 +65,39 @@ class AccountCreate extends Component {
                       <p>Home</p>
                     </Link>
                   </li>
-                  <li className="breadcrumb-item active">Account</li>
+                  <li className="breadcrumb-item ">
+                    <Link to="/account" className="linkCustom">
+                      Account
+                    </Link>
+                  </li>
+                  <li className="breadcrumb-item active">
+                      Create Account
+                  </li>
                 </ol>
               </div>
             </div>
             <div className="row">
-              <div className="col-12 text-right">
-                <div className="btn btn-success btn-sm">
-                  <i className="fa fa-plus-circle nav-icon" />
-                  <br />
-                  <h6 className="text-sm-white">Create</h6>
-                </div>
+              <div className="col-12">
+                  <button type="submit" className="col-1 btn btn-outline-success btn-sm pull-left mr-1"
+                      disabled={pristine || submitting}
+                  >
+                    <i className="fa fa-floppy-o nav-icon" />
+                    <h6 className="text-sm-white text-uppercase font-weight-bold ">Save</h6>
+                  </button>
+                  <button type="Button" className="col-1 btn btn-outline-secondary btn-sm pull-left mr-1"
+                     disabled={pristine || submitting} onClick={reset}
+                  >
+                    <i className="fa fa-retweet nav-icon" />
+                    <h6 className="text-sm-white text-uppercase font-weight-bold ">Clear</h6>
+                  </button>
+                  <button type="Button" className="col-1 btn btn-outline-danger btn-sm pull-left mr-1"
+                    onClick={() => {
+                      this.props.history.goBack();
+                    }}
+                  >
+                    <i className="fa fa-close nav-icon" />
+                    <h6 className="text-sm-white text-uppercase font-weight-bold ">Cancel</h6>
+                  </button>
               </div>
             </div>
           </div>
@@ -93,23 +119,23 @@ class AccountCreate extends Component {
                     </div>
                   </div>
                   <div className="card-body">
-                    <form className="form-horizontal">
+                    <form className="form-horizontal" onSubmit={handleSubmit(this.onClickSubmit)}>
                       <div className="form-group row">
                         <label htmlFor="text" className="col-sm-2 control-label">
-                          Account Code
+                          Code
                         </label>
                         <div className="col-sm-4">
                           <Field
-                            name="accountCode" component="input" placeholder="Account Code"
+                            name="accountCode" component="input" placeholder="Code"
                             className="form-control" type="text" id="accountCode"
                           />
                         </div>
                         <label htmlFor="text" className="col-sm-2 control-label">
-                          Account Name
+                          Name
                         </label>
                         <div className="col-sm-4">
                           <Field 
-                            name="accountName" component="input" placeholder="Account Name"
+                            name="accountName" component="input" placeholder="Name"
                             className="form-control" type="text" id="accountName"
                           />
                         </div>
@@ -119,7 +145,7 @@ class AccountCreate extends Component {
                           Status
                         </label>
                         <div className="col-sm-4">
-                          <Field name="status" component="select" className="form-control"  id="status">
+                          <Field name="accountStatus" component="select" className="form-control"  id="accountStatus">
                           <option>-- Select --</option>
                           <option value="1">Active</option>
                           <option value="0">InActive</option>
@@ -129,7 +155,7 @@ class AccountCreate extends Component {
                           Type
                         </label>
                         <div className="col-sm-4">
-                          <Field name="type" component="select"  className="form-control" id="type" >
+                          <Field name="accountType" component="select"  className="form-control" id="accountType" >
                           <option>-- Select --</option>
                           <option value="Retention">Retention</option>
                           <option value="Government">Government</option>
@@ -143,8 +169,8 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field
-                            name="email" component="input" placeholder="Email"
-                            className="form-control" type="email" id="email"
+                            name="accountEmail" component="input" placeholder="Email"
+                            className="form-control" type="email" id="accountEmail"
                           />
                         </div>
                         <label htmlFor="text" className="col-sm-2 control-label">
@@ -152,8 +178,8 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field 
-                            name="externalId" component="input" placeholder="External ID"
-                            className="form-control" type="text" id="externalId"
+                            name="accountExternalId" component="input" placeholder="External ID"
+                            className="form-control" type="text" id="accountExternalId"
                           />
                         </div>
                       </div>
@@ -163,8 +189,8 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field
-                            name="telephone" component="input" placeholder="Telephone"
-                            className="form-control" type="phonenumber" id="telephone"
+                            name="accountTelephone" component="input" placeholder="Telephone"
+                            className="form-control" type="phonenumber" id="accountTelephone"
                           />
                         </div>
                         <label htmlFor="text" className="col-sm-2 control-label">
@@ -172,8 +198,8 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field 
-                            name="fax" component="input" placeholder="Fax"
-                            className="form-control" type="text" id="fax"
+                            name="accountFax" component="input" placeholder="Fax"
+                            className="form-control" type="text" id="accountFax"
                           />
                         </div>
                       </div>
@@ -183,8 +209,8 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-10">
                           <Field
-                            name="address" component="textarea" placeholder="Address"
-                            className="form-control" type="text" id="address"
+                            name="accountAddress" component="textarea" placeholder="Address"
+                            className="form-control" type="text" id="accountAddress"
                           />
                         </div>
                       </div>
@@ -194,14 +220,20 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-10">
                           <Field 
-                            name="description" component="textarea" placeholder="Description"
-                            className="form-control" type="text" id="description"
+                            name="accountDescription" component="textarea" placeholder="Description"
+                            className="form-control" type="text" id="accountDescription"
                           />
                         </div>
                       </div>
+                      
+                        <button type="submit" className="btn btn-primary pull-right">
+                          Submit
+                        </button>
+                     
                     </form>
                   </div>
                 </div>
+
                 <div className="card">
                   <div className="card-header">
                       <div className="row">
@@ -309,7 +341,6 @@ class AccountCreate extends Component {
 
 const mapStateToProps = (form, appReducer) => ({
   form: form.accountCreateForm,
-  actions,
   appReducer
 });
 
@@ -320,5 +351,5 @@ const AccountCreateRedux = connect(
 
 export default reduxForm({
   form: "accountCreateForm",
-  initialValues: {}
+  initialValues: {accountStatus: 1}
 })(AccountCreateRedux);

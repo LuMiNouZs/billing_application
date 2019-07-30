@@ -4,13 +4,12 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/login.action";
 import { withRouter } from "react-router-dom";
 
-
 class Menu extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      //selectedMenu: "shop"
+      selectedMenu: "dashboard"
     };
   }
 
@@ -18,7 +17,7 @@ class Menu extends Component {
     return (
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         {/* Brand Logo */}
-        <a href="index3.html" className="brand-link">
+        <a href="" className="brand-link">
           <img
             src="images/logo/logo1.png"
             alt="Bliing Logo"
@@ -42,7 +41,7 @@ class Menu extends Component {
             </div>
             <div className="info">
               <a href="#" className="d-block">
-                Administrator
+                {this.props.loginReducer.result} Full Stack Developer
               </a>
             </div>
           </div>
@@ -57,8 +56,8 @@ class Menu extends Component {
               {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
               <li className="nav-header">GENERAL</li>
-              <li className="nav-item has-treeview menu-open">
-                <a href="#" className="nav-link ">
+              <li className="nav-item has-treeview menu-open ">
+                <a href="#" className="nav-link">
                   <i className="nav-icon fa fa-home" />
                   <p>
                     Main Menu
@@ -67,97 +66,28 @@ class Menu extends Component {
                 </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <div className="nav-link ">
-                      <Link to="/dashboard" className="linkCustom">
-                        <i className="fa fa-tachometer nav-icon" />
-                        <p>Dashboard</p>
-                      </Link>
-                    </div>
+                    <Link to="/dashboard" className={this.state.selectedMenu === 'dashboard' ? 'nav-link active' : 'nav-link' } onClick={()=>this.setState({selectedMenu: 'dashboard'})}>
+                      <i className="fa fa-tachometer nav-icon" />
+                      <p>Dashboard</p>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <div className="nav-link ">
-                      <Link to="/cdr" className="linkCustom">
-                        <i className="fa fa-database nav-icon" />
-                        <p>CDR</p>
-                      </Link>
-                    </div>
+                    <Link to="/account" className={this.state.selectedMenu === 'account' ? 'nav-link active' : 'nav-link' } onClick={()=>this.setState({selectedMenu: 'account'})}>
+                      <i className="fa fa fa-suitcase nav-icon" />
+                      <p>Accounts</p>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <div className="nav-link ">
-                      <Link to="/billing" className="linkCustom">
-                        <i className="fa fa-newspaper-o nav-icon" />
-                        <p>Billing</p>
-                      </Link>
-                    </div>
+                    <Link to="/cdr" className={this.state.selectedMenu === 'cdr' ? 'nav-link active' : 'nav-link' } onClick={()=>this.setState({selectedMenu: 'cdr'})}>
+                      <i className="fa fa-database nav-icon" />
+                      <p>Transaction</p>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a href="#" className="nav-link ">
-                      <i className="fa fa-refresh nav-icon" />
-                      <p>Import</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-
-              <li className="nav-item has-treeview">
-                <a href="#" className="nav-link">
-                  <i className="nav-icon fa fa-suitcase" />
-                  <p>
-                    Accounts
-                    <i className="fa fa-angle-left right" />
-                  </p>
-                </a>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <div className="nav-link ">
-                      <Link to="/accountCreate" className="linkCustom">
-                        <i className="fa fa-plus-circle nav-icon" />
-                        <p>Create Account</p>
-                      </Link>
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <div className="nav-link ">
-                      <Link to="/account" className="linkCustom ">
-                        <i className="fa fa-eye nav-icon" />
-                        <p>View Account</p>
-                      </Link>
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <div className="nav-link ">
-                      <a
-                        href="pages/examples/profile.html"
-                        className=""
-                      >
-                        <i className="fa fa-refresh nav-icon" />
-                        <p>Import Account</p>
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-
-              <li className="nav-item has-treeview">
-                <a href="#" className="nav-link">
-                  <i className="nav-icon fa fa-book" />
-                  <p>
-                    Report
-                    <i className="fa fa-angle-left right" />
-                  </p>
-                </a>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <a href="pages/examples/invoice.html" className="nav-link">
-                      <i className="fa fa-circle-o nav-icon" />
-                      <p>Lumpsum</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="pages/examples/profile.html" className="nav-link">
-                      <i className="fa fa-circle-o nav-icon" />
-                      <p>Minimum</p>
-                    </a>
+                    <Link to="/billing" className={this.state.selectedMenu === 'billing' ? 'nav-link active' : 'nav-link' } onClick={()=>this.setState({selectedMenu: 'billing'})}>
+                      <i className="fa fa-newspaper-o nav-icon" />
+                      <p>Billing</p>
+                    </Link>
                   </li>
                 </ul>
               </li>
