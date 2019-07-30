@@ -65,7 +65,7 @@ class Account extends Component {
         headerSortingStyle
       },
       {
-        dataField: "accountCode",
+        dataField: "account_code",
         text: "Code",
         headerClasses: "text-center",
         sort: true,
@@ -73,7 +73,7 @@ class Account extends Component {
         headerSortingStyle
       },
       {
-        dataField: "accountName",
+        dataField: "account_name",
         text: "Name",
         headerClasses: "text-center w-50",
         sort: true,
@@ -135,15 +135,13 @@ class Account extends Component {
           if (row._id) {
             return (
               <div>
-                <a className="btn btn-primary btn-sm" href="#">
-                  <i class="fa fa-folder" aria-hidden="true" />
-                </a>
-                <a className="btn btn-info btn-sm" href="#">
-                  <i class="fa fa-pencil" aria-hidden="true" />
-                </a>
-                <a className="btn btn-danger btn-sm" href="#">
-                  <i class="fa fa-trash" aria-hidden="true" />
-                </a>
+                <button className="btn btn-info btn-sm" href="#" onClick={() =>this.props.history.push("/account-edit/" + row._id)
+                }>
+                  <i class="fa fa-pencil-square-o" aria-hidden="true" />
+                </button>
+                <button className="btn btn-danger btn-sm" href="" onClick={() => this.props.deleteAccount(row._id)}>
+                  <i class="fa fa-trash-o" aria-hidden="true" />
+                </button>
               </div>
             );
           }

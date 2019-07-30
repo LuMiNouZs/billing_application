@@ -9,6 +9,7 @@ import Billing from './components/Billing'
 import CDRs from './components/CDRs'
 import Account from './components/Account'
 import AccountCreate from './components/AccountCreate'
+import AccountEdit from './components/AccountEdit'
 
 import { connect } from "react-redux"; 
 import * as actions from "../src/actions/app.action";
@@ -58,7 +59,7 @@ export class App extends Component {
           <PrivateRoute path='/cdr' component={CDRs}/>
           <PrivateRoute path='/account' component={Account}/>
           <PrivateRoute path="/account-create" component={AccountCreate}/>
-          {/* <PrivateRoute path='/customerCreate' component={CustomerCreate}> */}
+          <PrivateRoute path="/account-edit" component={AccountEdit}/>
           {isLoggedIn() ? <Footer/>: null }
         </div>
       </Router>

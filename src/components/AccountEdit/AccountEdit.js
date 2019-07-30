@@ -1,54 +1,47 @@
-import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import React, { Component } from 'react';
 import { connect } from "react-redux";
-import * as actions from "../../actions/account.action";
+import * as actions from "../../actions/account.edit.action";
 import { Link } from "react-router-dom";
-import DropdownList from 'react-widgets/lib/DropdownList'
+import { Field, reduxForm } from "redux-form";
 
-import "./AccountCreate.css";
-import 'react-widgets/dist/css/react-widgets.css'
+class AccountEdit extends Component {
 
-class AccountCreate extends Component {
+  componentDidMount() {
+    let accountId = this.props.match.params._id;
+    console.log(accountId)
+    this.props.getAccountById(accountId);
+  }
+  
   onClickSubmit = formValues => {
     var formData = new FormData();
     formData.append("account_code", formValues.accountCode);
-    formData.append("account_name", formValues.accountName);
+    formData.append("account_name", formValues.accouuntName);
     formData.append("status", formValues.accountStatus);
     formData.append("type", formValues.accountType);
     formData.append("telephone", formValues.accountTelephone);
     formData.append("fax", formValues.accountFax);
     formData.append("address", formValues.accountAddress);
     formData.append("description", formValues.accountDescription);
-
-    this.props.addAccount(this.props.history, formData);
+    formData.append("_id", this.props.match.params._id);
+    console.log("form data: " + JSON.stringify(formData));
+    this.props.updateProduct(this.props.history, formData);
     
   };
 
   render() {
+    const { result } = this.props.accountEditReducer;
+    if (result != null && !this.props.accountEditReducer.isInitialed) {
+      this.props.change("accountCode", result.account_code);
+      this.props.change("accountName", result.account_name);
+      this.props.change("accountStatus", result.status);
+      this.props.change("accountType", result.type);
+      this.props.change("accountTelephone", result.telephone);
+      this.props.change("accountFax", result.fax);
+      this.props.change("accountAddress", result.address);
+      this.props.change("accountDescription", result.description);
+      this.props.finishInitialization(true);
+    }
     const { handleSubmit, pristine, reset, submitting } = this.props;
-    const accountStatus = [ 
-      { status: 'Active', value: 1 } ,
-      { status: 'inActive', value: 0 },
-    ]
-    const accountType = [
-      { label: "Retention", value: "Retention" },
-      { label: "Government", value: "Government" },
-      { label: "Wholesale", value: "Wholesale" },
-    ];
-    const accountIndustry= [
-      { label: "CallCenter", value: "CallCenteroutbound" },
-      { label: "Communications", value: "Communications" },
-      { label: "Engineering", value: "Engineering" },
-      { label: "Manufacturing", value: "Manufacturing" },
-      { label: "Media", value: "Media" },
-      { label: "Recreation", value: "Recreation" },
-      { label: "Retail", value: "Retail" },
-      { label: "Recruitment", value: "Recruitment" },
-      { label: "IT", value: "IT" },
-      { label: "Telecommunications", value: "Telecommunications" },
-      { label: "Outsource", value: "Outsource" },
-      { label: "Other", value: "Other" },
-    ];
     return (
       <div className="content-wrapper">
          {/* Content Header (Page header) */}
@@ -56,7 +49,7 @@ class AccountCreate extends Component {
           <div className="container-fluid">
             <div className="row mb-0">
               <div className="col-sm-6">
-                <h1 className="m-0 text-dark text-uppercase">Create</h1>
+                <h1 className="m-0 text-dark text-uppercase">Edit</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -71,7 +64,7 @@ class AccountCreate extends Component {
                     </Link>
                   </li>
                   <li className="breadcrumb-item active">
-                      Create Account
+                      Edit Account
                   </li>
                 </ol>
               </div>
@@ -229,105 +222,9 @@ class AccountCreate extends Component {
                     </form>
                   </div>
                 </div>
-
-                <div className="card">
-                  <div className="card-header">
-                      <div className="row">
-                          <h3 className="card-title">PBX Information</h3>
-                          <div className="card-tools align-right">
-                            <button type="button" className="btn btn-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                              <i className="fa fa-minus"  aria-hidden="true"/>
-                            </button>
-                          </div>
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <form className="form-horizontal">
-                        <div className="form-group row">
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                            PBX SN
-                          </label>
-                          <div className="col-sm-4">
-                            <Field
-                              name="sn" component="input" placeholder="PBX SN"
-                              className="form-control" type="text" id="sn"
-                            />
-                          </div>
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                            PBX Name
-                          </label>
-                          <div className="col-sm-4">
-                            <Field 
-                              name="pbxName" component="input" placeholder="PBX Name"
-                              className="form-control" type="text" id="pbxName"
-                            />
-                          </div>
-                        </div>
-                        <div className="form-group row">
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                            Status
-                          </label>
-                          <div className="col-sm-4">
-                            <Field name="status" component="select" className="form-control"  id="status">
-                            <option>-- Select --</option>
-                            <option value="1">Active</option>
-                            <option value="0">InActive</option>
-                            </Field>
-                          </div>
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                            PBX Type
-                          </label>
-                          <div className="col-sm-4">
-                            <Field name="pbxType" component="select"  className="form-control" id="pbxType" >
-                            <option>-- Select --</option>
-                            <option value="Trial">Trial</option>
-                            <option value="Commercial">Commercial</option>
-                            </Field>
-                          </div>
-                        </div>
-                        <div className="form-group row">
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                            Extension
-                          </label>
-                          <div className="col-sm-4">
-                            <Field
-                              name="extension" component="input" placeholder="Extension"
-                              className="form-control" type="text" id="extension"
-                            />
-                          </div>
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                            Concurrent
-                          </label>
-                          <div className="col-sm-4">
-                            <Field 
-                              name="concurrent" component="input" placeholder="Concurrent Call"
-                              className="form-control" type="text" id="concurrent"
-                            />
-                          </div>
-                        </div>
-                        <div className="form-group row">
-                          <label htmlFor="text" className="col-sm-2 control-label">
-                              URL
-                            </label>
-                            <div className="col-sm-8">
-                              <Field
-                                name="url" component="input" placeholder="Url"
-                                className="form-control" type="text" id="url"
-                              />
-                           </div>
-                           <label htmlFor="text" className="col-sm-2 control-label">
-                              .sipper.co.th
-                            </label>
-                        </div>
-                      </form>
-                    </div>
-                </div>
               </div>
             </div>
             {/* /.row */}
-
-
-            
           </div>
         </div>
       </div>
@@ -335,17 +232,17 @@ class AccountCreate extends Component {
   }
 }
 
-const mapStateToProps = (form, appReducer) => ({
-  form: form.accountCreateForm,
-  appReducer
+
+const mapStateToProps = (form, accountEditReducer) => ({
+  form: form.accountEditForm,
+  accountEditReducer
 });
 
-const AccountCreateRedux = connect(
+const AccountEditRedux = connect(
   mapStateToProps,
   actions
-)(AccountCreate);
+)(AccountEdit);
 
 export default reduxForm({
-  form: "accountCreateForm",
-  initialValues: {accountStatus: 1}
-})(AccountCreateRedux);
+  form: "accountEditForm"
+})(AccountEditRedux);

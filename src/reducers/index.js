@@ -4,6 +4,7 @@ import loginReducer from "./login.reducer";
 import billingReducer from "./billing.reducer";
 import cdrReducer from "./cdr.reducer";
 import accountReducer from "./account.reducer";
+import accountEditReducer from './account.edit.reducer'
 import { reducer as form } from "redux-form";
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   billingReducer,
   cdrReducer,
   accountReducer,
+  accountEditReducer,
   form
 });
