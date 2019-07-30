@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/account.action";
 import { Link } from "react-router-dom";
 import DropdownList from 'react-widgets/lib/DropdownList'
-
+import Swal from 'sweetalert2'
 import "./AccountCreate.css";
 import 'react-widgets/dist/css/react-widgets.css'
 
@@ -50,7 +50,7 @@ class AccountCreate extends Component {
       { label: "Other", value: "Other" },
     ];
     return (
-      <div className="content-wrapper">
+      <div className="content-wrapper" style={{}}>
          {/* Content Header (Page header) */}
         <div className="content-header">
           <div className="container-fluid">
@@ -81,6 +81,8 @@ class AccountCreate extends Component {
                   <button type="button" className="col-1 btn btn-outline-success btn-sm pull-left mr-1"
                       disabled={pristine || submitting}
                       onClick={handleSubmit(this.onClickSubmit)}
+                       
+                           
                   >
                     <i className="fa fa-floppy-o nav-icon" />
                     <h6 className="text-sm-white text-uppercase font-weight-bold ">Save</h6>

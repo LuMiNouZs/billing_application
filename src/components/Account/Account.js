@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 //import _ from "lodash";
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
-
+import Swal from 'sweetalert2'
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, {
   PaginationProvider,
@@ -139,7 +139,29 @@ class Account extends Component {
                 }>
                   <i class="fa fa-pencil-square-o" aria-hidden="true" />
                 </button>
-                <button className="btn btn-danger btn-sm" href="" onClick={() => this.props.deleteAccount(row._id)}>
+                <button className="btn btn-danger btn-sm" href="" 
+                onClick={() =>
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then((result) => {
+                    if (result.value) {
+                      Swal.fire(
+                        'Deleted!',
+                        'Your record has been deleted.',
+                        'success'
+                        
+                      )
+                      this.props.deleteAccount(row._id)
+                    }
+                  })
+                 //this.props.deleteAccount(row._id)
+                 }>
                   <i class="fa fa-trash-o" aria-hidden="true" />
                 </button>
               </div>
