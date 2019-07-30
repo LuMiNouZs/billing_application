@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import * as actions from "../../actions/account.edit.action";
+import AccountRequest from "./../../models/account";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 
@@ -15,7 +16,7 @@ class AccountEdit extends Component {
   onClickSubmit = formValues => {
     var formData = new FormData();
     formData.append("account_code", formValues.accountCode);
-    formData.append("account_name", formValues.accouuntName);
+    formData.append("account_name", formValues.accountName);
     formData.append("status", formValues.accountStatus);
     formData.append("type", formValues.accountType);
     formData.append("telephone", formValues.accountTelephone);
@@ -24,10 +25,27 @@ class AccountEdit extends Component {
     formData.append("description", formValues.accountDescription);
     formData.append("_id", this.props.match.params._id);
     console.log("form data: " + JSON.stringify(formData));
-    this.props.updateProduct(this.props.history, formData);
+    this.props.updateAccount(this.props.history, formData);
     
   };
 
+
+  // onClickSubmit = () => {
+  //   const { props } = this;
+
+  //   let accountRequest = new AccountRequest();
+  //   accountRequest.account_code = props.form.accountEditForm.values.accountCode;
+  //   accountRequest.account_name = props.form.accountEditForm.values.accountName;
+  //   accountRequest.status = props.form.accountEditForm.values.accountStatus;
+  //   accountRequest.type = props.form.accountEditForm.values.accountType;
+  //   accountRequest.telephone = props.form.accountEditForm.values.accountTelephone;
+  //   accountRequest.fax = props.form.accountEditForm.values.accountFax;
+  //   accountRequest.address = props.form.accountEditForm.values.accountAddress;
+  //   accountRequest.description = props.form.accountEditForm.values.accountDescription;
+  //   console.log("form data: " + JSON.stringify(accountRequest));
+  //   this.props.updateAccount(this.props.history,accountRequest);
+  // };
+  
   render() {
     const { result } = this.props.accountEditReducer;
     if (result != null && !this.props.accountEditReducer.isInitialed) {
@@ -140,7 +158,7 @@ class AccountEdit extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field name="accountStatus" component="select" className="form-control"  id="accountStatus">
-                          <option value="">-- Select --</option>
+                          <option />
                           <option value="1">Active</option>
                           <option value="0">InActive</option>
                           </Field>
@@ -150,7 +168,7 @@ class AccountEdit extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field name="accountType" component="select"  className="form-control" id="accountType" >
-                          <option value="">-- Select --</option>
+                          <option />
                           <option value="Retention">Retention</option>
                           <option value="Government">Government</option>
                           <option value="Wholesale">Wholesale</option>
@@ -233,9 +251,10 @@ class AccountEdit extends Component {
 }
 
 
-const mapStateToProps = (form, accountEditReducer) => ({
-  form: form.accountEditForm,
-  accountEditReducer
+const mapStateToProps = (state) => ({
+  form: state.form.accountEditForm,
+  accountEditReducer: state.accountEditReducer,
+  initialValues: state.accountEditReducer.result
 });
 
 const AccountEditRedux = connect(
@@ -244,5 +263,17 @@ const AccountEditRedux = connect(
 )(AccountEdit);
 
 export default reduxForm({
-  form: "accountEditForm"
+  form: "accountEditForm",
+  initialValues: { 
+    accountCode : "",
+    accountName : "",
+    accountStatus : 1,
+    accountType : "",
+    accountEmail : "",
+    accountExternalId : "",
+    accountTelephone : "",
+    accountFax : "",
+    accountAddress : "",
+    accountDescription : ""
+  }
 })(AccountEditRedux);

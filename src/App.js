@@ -59,7 +59,7 @@ export class App extends Component {
           <PrivateRoute path='/cdr' component={CDRs}/>
           <PrivateRoute path='/account' component={Account}/>
           <PrivateRoute path="/account-create" component={AccountCreate}/>
-          <PrivateRoute path="/account-edit" component={AccountEdit}/>
+          <PrivateRoute path="/account-edit/:_id" component={AccountEdit}/>
           {isLoggedIn() ? <Footer/>: null }
         </div>
       </Router>

@@ -147,7 +147,7 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field name="accountStatus" component="select" className="form-control"  id="accountStatus">
-                          <option value="">-- Select --</option>
+                          <option >-- Select --</option>
                           <option value="1">Active</option>
                           <option value="0">InActive</option>
                           </Field>
@@ -157,7 +157,7 @@ class AccountCreate extends Component {
                         </label>
                         <div className="col-sm-4">
                           <Field name="accountType" component="select"  className="form-control" id="accountType" >
-                          <option value="">-- Select --</option>
+                          <option >-- Select --</option>
                           <option value="Retention">Retention</option>
                           <option value="Government">Government</option>
                           <option value="Wholesale">Wholesale</option>
@@ -347,5 +347,16 @@ const AccountCreateRedux = connect(
 
 export default reduxForm({
   form: "accountCreateForm",
-  initialValues: {accountStatus: 1}
+  initialValues: { 
+    accountCode : "",
+    accountName : "",
+    accountStatus : 1,
+    accountType : "",
+    accountEmail : "",
+    accountExternalId : "",
+    accountTelephone : "",
+    accountFax : "",
+    accountAddress : "",
+    accountDescription : ""
+  }
 })(AccountCreateRedux);
