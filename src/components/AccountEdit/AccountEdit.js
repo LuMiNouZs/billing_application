@@ -4,7 +4,7 @@ import * as actions from "../../actions/account.edit.action";
 import AccountRequest from "./../../models/account";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-
+import Swal from 'sweetalert2'
 class AccountEdit extends Component {
 
   componentDidMount() {
@@ -14,18 +14,26 @@ class AccountEdit extends Component {
   }
   
   onClickSubmit = formValues => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    }); 
+
     var formData = new FormData();
     formData.append("account_code", formValues.accountCode);
     formData.append("account_name", formValues.accountName);
     formData.append("status", formValues.accountStatus);
     formData.append("type", formValues.accountType);
+    formData.append("email", formValues.accountEmail);
     formData.append("telephone", formValues.accountTelephone);
     formData.append("fax", formValues.accountFax);
     formData.append("address", formValues.accountAddress);
     formData.append("description", formValues.accountDescription);
     formData.append("_id", this.props.match.params._id);
     console.log("form data: " + JSON.stringify(formData));
-    this.props.updateAccount(this.props.history, formData);
+    this.props.updateAccount(this.props.history, formData, Toast.fire({ type: 'success', title: 'Updated successfully'}));
     
   };
 
@@ -53,13 +61,14 @@ class AccountEdit extends Component {
       this.props.change("accountName", result.account_name);
       this.props.change("accountStatus", result.status);
       this.props.change("accountType", result.type);
+      this.props.change("accountEmail", result.email);
       this.props.change("accountTelephone", result.telephone);
       this.props.change("accountFax", result.fax);
       this.props.change("accountAddress", result.address);
       this.props.change("accountDescription", result.description);
       this.props.finishInitialization(true);
     }
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { handleSubmit, pristine, submitting } = this.props;
     return (
       <div className="content-wrapper">
          {/* Content Header (Page header) */}
@@ -96,12 +105,6 @@ class AccountEdit extends Component {
                     <i className="fa fa-floppy-o nav-icon" />
                     <h6 className="text-sm-white text-uppercase font-weight-bold ">Save</h6>
                   </button>
-                  <button type="Button" className="col-1 btn btn-outline-secondary btn-sm pull-left mr-1"
-                     disabled={pristine || submitting} onClick={reset}
-                  >
-                    <i className="fa fa-retweet nav-icon" />
-                    <h6 className="text-sm-white text-uppercase font-weight-bold ">Clear</h6>
-                  </button>
                   <button type="Button" className="col-1 btn btn-outline-danger btn-sm pull-left mr-1"
                     onClick={() => {
                       this.props.history.goBack();
@@ -133,41 +136,41 @@ class AccountEdit extends Component {
                   <div className="card-body">
                     <form className="form-horizontal" onSubmit={handleSubmit(this.onClickSubmit)}>
                       <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Code
                         </label>
                         <div className="col-sm-4">
                           <Field
                             name="accountCode" component="input" placeholder="Code"
-                            className="form-control" type="text" id="accountCode"
+                            className="form-control form-control-sm" type="text" id="accountCode"
                           />
                         </div>
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Name
                         </label>
                         <div className="col-sm-4">
                           <Field 
                             name="accountName" component="input" placeholder="Name"
-                            className="form-control" type="text" id="accountName"
+                            className="form-control form-control-sm" type="text" id="accountName"
                           />
                         </div>
                       </div>
                       <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Status
                         </label>
                         <div className="col-sm-4">
-                          <Field name="accountStatus" component="select" className="form-control"  id="accountStatus">
+                          <Field name="accountStatus" component="select" className="form-control form-control-sm"  id="accountStatus">
                           <option />
                           <option value="1">Active</option>
                           <option value="0">InActive</option>
                           </Field>
                         </div>
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Type
                         </label>
                         <div className="col-sm-4">
-                          <Field name="accountType" component="select"  className="form-control" id="accountType" >
+                          <Field name="accountType" component="select"  className="form-control form-control-sm" id="accountType" >
                           <option />
                           <option value="Retention">Retention</option>
                           <option value="Government">Government</option>
@@ -176,64 +179,64 @@ class AccountEdit extends Component {
                         </div>
                       </div>
                       <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Email
                         </label>
                         <div className="col-sm-4">
                           <Field
                             name="accountEmail" component="input" placeholder="Email"
-                            className="form-control" type="email" id="accountEmail"
+                            className="form-control form-control-sm" type="email" id="accountEmail"
                           />
                         </div>
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           External ID
                         </label>
                         <div className="col-sm-4">
                           <Field 
                             name="accountExternalId" component="input" placeholder="External ID"
-                            className="form-control" type="text" id="accountExternalId"
+                            className="form-control form-control-sm" type="text" id="accountExternalId"
                           />
                         </div>
                       </div>
                       <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Telephone
                         </label>
                         <div className="col-sm-4">
                           <Field
                             name="accountTelephone" component="input" placeholder="Telephone"
-                            className="form-control" type="phonenumber" id="accountTelephone"
+                            className="form-control form-control-sm" type="phonenumber" id="accountTelephone"
                           />
                         </div>
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Fax
                         </label>
                         <div className="col-sm-4">
                           <Field 
                             name="accountFax" component="input" placeholder="Fax"
-                            className="form-control" type="phonenumber" id="accountFax"
+                            className="form-control form-control-sm" type="phonenumber" id="accountFax"
                           />
                         </div>
                       </div>
                       <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Address
                         </label>
                         <div className="col-sm-10">
                           <Field
                             name="accountAddress" component="textarea" placeholder="Address"
-                            className="form-control" type="text" id="accountAddress"
+                            className="form-control form-control-sm" type="text" id="accountAddress"
                           />
                         </div>
                       </div>
                       <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 control-label">
+                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
                           Description
                         </label>
                         <div className="col-sm-10">
                           <Field 
                             name="accountDescription" component="textarea" placeholder="Description"
-                            className="form-control" type="text" id="accountDescription"
+                            className="form-control form-control-sm" type="text" id="accountDescription"
                           />
                         </div>
                       </div> 
