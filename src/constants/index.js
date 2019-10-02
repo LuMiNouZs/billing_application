@@ -12,6 +12,16 @@ export const HTTP_ACCOUNT_FETCHING = "HTTP_ACCOUNT_FETCHING";
 export const HTTP_ACCOUNT_SUCCESS = "HTTP_ACCOUNT_SUCCESS";
 export const HTTP_ACCOUNT_FAILED = "HTTP_ACCOUNT_FAILED";
 
+// Device API
+export const HTTP_DEVICE_FETCHING = "HTTP_DEVICE_FETCHING";
+export const HTTP_DEVICE_SUCCESS = "HTTP_DEVICE_SUCCESS";
+export const HTTP_DEVICE_FAILED = "HTTP_DEVICE_FAILED";
+
+//Rate
+export const HTTP_RATE_FETCHING = "HTTP_RATE_FETCHING";
+export const HTTP_RATE_SUCCESS = "HTTP_RATE_SUCCESS";
+export const HTTP_RATE_FAILED = "HTTP_RATE_FAILED";
+
 // Account Edit Page
 export const HTTP_ACCOUNT_EDIT_FETCHING = "HTTP_ACCOUNT_EDIT_FETCHING";
 export const HTTP_ACCOUNT_EDIT_SUCCESS = "HTTP_ACCOUNT_EDIT_SUCCESS";
@@ -32,6 +42,11 @@ export const HTTP_BILLING_FAILED = "HTTP_BILLING_FAILED";
 export const HTTP_CDR_FETCHING = "HTTP_CDR_FETCHING";
 export const HTTP_CDR_SUCCESS = "HTTP_CDR_SUCCESS";
 export const HTTP_CDR_FAILED = "HTTP_CDR_FAILED";
+
+// Transaction Page
+export const HTTP_TRANSACTION_FETCHING = "HTTP_TRANSACTION_FETCHING";
+export const HTTP_TRANSACTION_SUCCESS = "HTTP_TRANSACTION_SUCCESS";
+export const HTTP_TRANSACTION_FAILED = "HTTP_TRANSACTION_FAILED";
 
 // Shop Page
 export const HTTP_SHOP_FETCHING = "HTTP_SHOP_FETCHING";
@@ -62,8 +77,8 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE = 'An error has occurred. The photo was u
 //export const apiUrl =  "http://192.168.20.241:8081/billing/api/v1";
 //export const imageUrl = "http://192.168.20.241:8081";
 
-export const apiUrl =  "http://203.121.143.83:8081/api/v1";
-export const imageUrl = "http://203.121.143.83:8081";
+export const apiUrl =  "http://203.121.143.50:8081/api/v1";
+export const imageUrl = "http://203.121.143.50:8081";
 
 
 export const server = {    
@@ -72,6 +87,7 @@ export const server = {
     PRODUCT_URL : `product`,    
     BILLING_URL : `billing`, 
     CDR_PER_MONTH_URL : `cdrPerMonth`,   
+    TRANSACTION_URL :  `transaction`,
     REPORT_URL: `report`,    
     TOKEN_KEY : `token`,
 }

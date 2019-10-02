@@ -8,7 +8,7 @@ axios.interceptors.request.use(async (config) => {
     if (!isAbsoluteURLRegex.test(config.url)) {
         const userToken = localStorage.getItem(server.TOKEN_KEY)
         if (userToken) {
-            config.headers = { 'x-access-token': userToken }
+            config.headers = { 'x-access-token': userToken}
         }
         config.url = join(apiUrl, config.url) 
     }

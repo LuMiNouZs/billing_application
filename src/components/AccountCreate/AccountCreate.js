@@ -2,69 +2,64 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import * as actions from "../../actions/account.action";
+import * as deviceAction from "../../actions/device.action";
+import * as rateAction from "../../actions/rate.action";
+
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./AccountCreate.css";
 import "react-widgets/dist/css/react-widgets.css";
-import { async } from "q";
 
 class AccountCreate extends Component {
-  onClickSubmit =async (formValues)=> {
+  onClickSubmit = formValues => {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
       showConfirmButton: false,
       timer: 3000
     });
-
-    var  formApiData = await new FormData();
-    formApiData.append("device_sn", formValues.deviceSn);
-    formApiData.append("device_name", formValues.deviceName);
-    formApiData.append("status", formValues.deviceStatus);
-    formApiData.append("type", formValues.deviceType);
-    formApiData.append("url", formValues.deviceUrl);
-    formApiData.append("userApi", formValues.deviceUserApi);
-    formApiData.append("PasswordApi", formValues.devicePasswordApi);
-    formApiData.append("note", formValues.deviceNote);
-
-    var formRateData = await new FormData(); 
-    formRateData.append("rate_name", formValues.rateName);
-    formRateData.append("status", formValues.rateStatus);
-    formRateData.append("cycle", formValues.rateCycle);
-    formRateData.append("local", {"rate": formValues.rateLocal, "type": formValues.rateLocalType});
-    formRateData.append("longDistance", {"rate": formValues.rateLongDistance, "type": formValues.rateLongDistanceType});
-    formRateData.append("inter", {"rate": formValues.rateInter, "type": formValues.rateInterType});
-    formRateData.append("note", formValues.rateNote);
-
-    var formData = await new FormData();
+    var formData = new FormData();
     formData.append("account_code", formValues.accountCode);
     formData.append("account_name", formValues.accountName);
     formData.append("status", formValues.accountStatus);
     formData.append("type", formValues.accountType);
     formData.append("email", formValues.accountEmail);
     formData.append("telephone", formValues.accountTelephone);
-    formData.append("fax", formValues.accountFax);           
+    formData.append("fax", formValues.accountFax);
     formData.append("address", formValues.accountAddress);
     formData.append("description", formValues.accountDescription);
-    formData.append("deviceApi", formApiData.values());
-    formData.append("rate", formRateData.values());
+
+    formData.append("device_sn", formValues.deviceSn);
+    formData.append("device_name", formValues.deviceName);
+    formData.append("status_api", formValues.deviceStatus);
+    formData.append("type_api", formValues.deviceType);
+    formData.append("url_api", formValues.deviceUrl);
+    formData.append("user_api", formValues.deviceUserApi);
+    formData.append("pass_api", formValues.devicePasswordApi);
+    formData.append("note_api", formValues.deviceNote);
+
+    formData.append("rate_name", formValues.rateName);
+    formData.append("rate_cycle", formValues.rateCycle);
+    formData.append("rate_status", formValues.rateStatus);
+    formData.append("local", formValues.rateLocal);
+    formData.append("local_type", formValues.rateLocalType);
+    formData.append("long_distance", formValues.rateLongDistance);
+    formData.append("long_distance_type", formValues.rateLongDistanceType);
+    formData.append("inter", formValues.rateInter);
+    formData.append("inter_type", formValues.rateInterType);
+    formData.append("rete_des", formValues.rateNote);
+
     this.props.addAccount(
       this.props.history,
       formData,
-      Toast.fire({ type: "success", title: "Created successfully" })
+      Toast.fire({ type: "success", title: "Created account successfully" })
     );
     console.log("form " + formData);
-    
-
-   
   };
 
-  renderAccountInformation = (handleSubmit, pristine, reset, submitting) => {
+  renderAccountInformation = () => {
     return (
-      <form
-        className="form-horizontal"
-        onSubmit={handleSubmit(this.onClickSubmit)}
-      >
+      <form className="form-horizontal">
         <div className="form-group row">
           <label
             htmlFor="text"
@@ -246,7 +241,7 @@ class AccountCreate extends Component {
     );
   };
 
-  renderApiInformation = (handleSubmit, pristine, reset, submitting) => {
+  renderApiInformation = () => {
     return (
       <form className="form-horizontal">
         <div className="form-group row">
@@ -258,7 +253,7 @@ class AccountCreate extends Component {
           </label>
           <div className="col-sm-4">
             <Field
-              name="pbxSn"
+              name="deviceSn"
               component="input"
               placeholder="PBX SN"
               className="form-control form-control-sm "
@@ -337,8 +332,8 @@ class AccountCreate extends Component {
               type="text"
               id="deviceUrl"
             />
-            <div class="input-group-append">
-              <span class="input-group-text">@sipper.co.th</span>
+            <div className="input-group-append">
+              <span className="input-group-text">@sipper.co.th</span>
             </div>
           </div>
         </div>
@@ -377,7 +372,7 @@ class AccountCreate extends Component {
           </div>
         </div>
         <div className="form-group row">
-        <label
+          <label
             htmlFor="text"
             className="col-sm-2 col-form-label col-form-label-sm"
           >
@@ -393,13 +388,12 @@ class AccountCreate extends Component {
               id="deviceNote"
             />
           </div>
-
         </div>
       </form>
     );
   };
 
-  renderRateInformation = (handleSubmit, pristine, reset, submitting) => {
+  renderRateInformation = () => {
     return (
       <form className="form-horizontal">
         <div className="form-group row">
@@ -446,7 +440,7 @@ class AccountCreate extends Component {
             Rate Cycle
           </label>
           <div className="col-sm-4">
-          <Field
+            <Field
               name="rateCycle"
               component="select"
               className="form-control form-control-sm"
@@ -457,7 +451,6 @@ class AccountCreate extends Component {
               <option value="1">11-10</option>
               <option value="2">16-15</option>
               <option value="3">26-25</option>
-             
             </Field>
           </div>
           <label
@@ -475,8 +468,8 @@ class AccountCreate extends Component {
               type="text"
               id="rateLocal"
             />
-            <div class="input-group-append">
-              <span class="input-group-text">฿</span>
+            <div className="input-group-append">
+              <span className="input-group-text">฿</span>
             </div>
           </div>
           <div className="col-sm-2">
@@ -507,8 +500,8 @@ class AccountCreate extends Component {
               type="text"
               id="rateLongDistance"
             />
-            <div class="input-group-append">
-              <span class="input-group-text">฿</span>
+            <div className="input-group-append">
+              <span className="input-group-text">฿</span>
             </div>
           </div>
           <div className="col-sm-2">
@@ -537,8 +530,8 @@ class AccountCreate extends Component {
               type="text"
               id="rateInter"
             />
-            <div class="input-group-append">
-              <span class="input-group-text ">฿</span>
+            <div className="input-group-append">
+              <span className="input-group-text ">฿</span>
             </div>
           </div>
           <div className="col-sm-2">
@@ -554,23 +547,22 @@ class AccountCreate extends Component {
           </div>
         </div>
         <div className="form-group row">
-        <label
+          <label
             htmlFor="text"
             className="col-sm-2 col-form-label col-form-label-sm"
           >
-            Note
+            Description
           </label>
           <div className="col-sm-10">
             <Field
-              name="deviceNote"
+              name="rateDescription"
               component="textarea"
-              placeholder="Note"
+              placeholder="Description"
               className="form-control form-control-sm"
               type="text"
-              id="deviceNote"
+              id="rateDescription"
             />
           </div>
-
         </div>
       </form>
     );
@@ -580,7 +572,7 @@ class AccountCreate extends Component {
     const { handleSubmit, pristine, reset, submitting } = this.props;
 
     return (
-      <div className="content-wrapper" style={{}}>
+      <div className="content-wrapper align-middle" style={{}}>
         {/* Content Header (Page header) */}
         <div className="content-header">
           <div className="container-fluid">
@@ -665,19 +657,15 @@ class AccountCreate extends Component {
                     </div>
                   </div>
                   <div className="card-body">
-                    {this.renderAccountInformation(
-                      handleSubmit,
-                      pristine,
-                      reset,
-                      submitting
-                    )}
+                    {this.renderAccountInformation()}
                   </div>
                 </div>
+
                 <div className="row">
-                  <div className=" col-sm-6">
+                  <div className="col-sm-12">
                     <div className="card">
                       <div className="card-header">
-                        <h5 className="card-title">PBX API Information</h5>
+                        <h5 className="card-title">{`Device & API Connection`}</h5>
                         <div className="card-tools">
                           <button
                             type="button"
@@ -695,10 +683,13 @@ class AccountCreate extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                </div>
+
+                <div className="row">
+                  <div className=" col-sm-12">
                     <div className="card">
                       <div className="card-header">
-                        <h5 className="card-title">Rate Information</h5>
+                        <h5 className="card-title">Rate Billing Control</h5>
                         <div className="card-tools">
                           <button
                             type="button"
@@ -732,9 +723,15 @@ const mapStateToProps = (form, appReducer) => ({
   appReducer
 });
 
+const mapDispatchToProps = {
+  ...actions,
+  ...deviceAction,
+  ...rateAction
+};
+
 const AccountCreateRedux = connect(
   mapStateToProps,
-  actions
+  mapDispatchToProps
 )(AccountCreate);
 
 export default reduxForm({
@@ -749,6 +746,26 @@ export default reduxForm({
     accountTelephone: "",
     accountFax: "",
     accountAddress: "",
-    accountDescription: ""
+    accountDescription: "",
+
+    deviceSn: "",
+    deviceName: "",
+    deviceStatus: 1,
+    deviceType: "Trial",
+    deviceUrl: "",
+    deviceUserApi: "",
+    devicePasswordApi: "",
+    deviceNote: "",
+
+    rateName: "",
+    rateCycle: 0,
+    rateStatus: 1,
+    rateLocal: "0",
+    rateLocalType: "Min",
+    rateLongDistance: "0",
+    rateLongDistanceType: "Min",
+    rateInter: "0",
+    rateInterType: "Min",
+    rateNote: ""
   }
 })(AccountCreateRedux);
