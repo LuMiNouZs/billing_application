@@ -31,29 +31,544 @@ class AccountEdit extends Component {
     formData.append("fax", formValues.accountFax);
     formData.append("address", formValues.accountAddress);
     formData.append("description", formValues.accountDescription);
+
+    formData.append("device_sn", formValues.deviceSn);
+    formData.append("device_name", formValues.deviceName);
+    formData.append("status_api", formValues.deviceStatus);
+    formData.append("type_api", formValues.deviceType);
+    formData.append("url_api", formValues.deviceUrl);
+    formData.append("user_api", formValues.deviceUserApi);
+    formData.append("pass_api", formValues.devicePasswordApi);
+    formData.append("note_api", formValues.deviceNote);
+
+    formData.append("rate_name", formValues.rateName);
+    formData.append("rate_cycle", formValues.rateCycle);
+    formData.append("rate_status", formValues.rateStatus);
+    formData.append("local", formValues.rateLocal);
+    formData.append("local_type", formValues.rateLocalType);
+    formData.append("long_distance", formValues.rateLongDistance);
+    formData.append("long_distance_type", formValues.rateLongDistanceType);
+    formData.append("inter", formValues.rateInter);
+    formData.append("inter_type", formValues.rateInterType);
+    formData.append("rete_description", formValues.rateNote);
+    
     formData.append("_id", this.props.match.params._id);
     console.log("form data: " + JSON.stringify(formData));
     this.props.updateAccount(this.props.history, formData, Toast.fire({ type: 'success', title: 'Updated successfully'}));
     
   };
 
+  renderAccountInformation = () => {
+    return (
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Code
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountCode"
+              component="input"
+              placeholder="Code"
+              className="form-control form-control-sm"
+              type="text"
+              id="accountCode"
+            />
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Name
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountName"
+              component="input"
+              placeholder="Name"
+              className="form-control form-control-sm"
+              type="text"
+              id="accountName"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Status
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountStatus"
+              component="select"
+              className="form-control form-control-sm"
+              id="accountStatus"
+            >
+              <option />
+              <option value="1">Active</option>
+              <option value="0">InActive</option>
+            </Field>
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Type
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountType"
+              component="select"
+              className="form-control form-control-sm"
+              id="accountType"
+            >
+              <option />
+              <option value="Retention">Retention</option>
+              <option value="Government">Government</option>
+              <option value="Wholesale">Wholesale</option>
+            </Field>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Email
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountEmail"
+              component="input"
+              placeholder="Email"
+              className="form-control form-control-sm"
+              type="email"
+              id="accountEmail"
+            />
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            External ID
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountExternalId"
+              component="input"
+              placeholder="External ID"
+              className="form-control form-control-sm"
+              type="text"
+              id="accountExternalId"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Telephone
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountTelephone"
+              component="input"
+              placeholder="Telephone"
+              className="form-control form-control-sm"
+              type="phonenumber"
+              id="accountTelephone"
+            />
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Fax
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="accountFax"
+              component="input"
+              placeholder="Fax"
+              className="form-control form-control-sm"
+              type="phonenumber"
+              id="accountFax"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Address
+          </label>
+          <div className="col-sm-10">
+            <Field
+              name="accountAddress"
+              component="textarea"
+              placeholder="Address"
+              className="form-control form-control-sm"
+              type="text"
+              id="accountAddress"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Description
+          </label>
+          <div className="col-sm-10">
+            <Field
+              name="accountDescription"
+              component="textarea"
+              placeholder="Description"
+              className="form-control form-control-sm"
+              type="text"
+              id="accountDescription"
+            />
+          </div>
+        </div>
+      </form>
+    );
+  };
 
-  // onClickSubmit = () => {
-  //   const { props } = this;
+  renderApiInformation = () => {
+    return (
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Device SN
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="deviceSn"
+              component="input"
+              placeholder="PBX SN"
+              className="form-control form-control-sm "
+              type="text"
+              id="deviceSn"
+            />
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            PBX Name
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="deviceName"
+              component="input"
+              placeholder="PBX Name"
+              className="form-control form-control-sm"
+              type="text"
+              id="deviceName"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Status
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="deviceStatus"
+              component="select"
+              className="form-control form-control-sm"
+              id="deviceStatus"
+            >
+              <option />
+              <option value="1">Active</option>
+              <option value="0">InActive</option>
+            </Field>
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Type
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="deviceType"
+              component="select"
+              className="form-control form-control-sm"
+              id="deviceType"
+            >
+              <option />
+              <option value="Trial">Trial</option>
+              <option value="Commercial">Commercial</option>
+            </Field>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            URL
+          </label>
+          <div className="input-group input-group-sm col-sm-10">
+            <Field
+              name="deviceUrl"
+              component="input"
+              placeholder="Url"
+              className="form-control form-control-sm"
+              type="text"
+              id="deviceUrl"
+            />
+            <div className="input-group-append">
+              <span className="input-group-text">@sipper.co.th</span>
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm "
+          >
+            User API
+          </label>
+          <div className="col-sm-4 ">
+            <Field
+              name="deviceUserApi"
+              component="input"
+              placeholder="User API"
+              className="form-control form-control-sm "
+              type="text"
+              id="pbxUserApi"
+            />
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Pass API
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="devicePasswordApi"
+              component="input"
+              placeholder="Password API"
+              className="form-control form-control-sm"
+              type="password"
+              id="Password Api"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Note
+          </label>
+          <div className="col-sm-10">
+            <Field
+              name="deviceNote"
+              component="textarea"
+              placeholder="Note"
+              className="form-control form-control-sm"
+              type="text"
+              id="deviceNote"
+            />
+          </div>
+        </div>
+      </form>
+    );
+  };
 
-  //   let accountRequest = new AccountRequest();
-  //   accountRequest.account_code = props.form.accountEditForm.values.accountCode;
-  //   accountRequest.account_name = props.form.accountEditForm.values.accountName;
-  //   accountRequest.status = props.form.accountEditForm.values.accountStatus;
-  //   accountRequest.type = props.form.accountEditForm.values.accountType;
-  //   accountRequest.telephone = props.form.accountEditForm.values.accountTelephone;
-  //   accountRequest.fax = props.form.accountEditForm.values.accountFax;
-  //   accountRequest.address = props.form.accountEditForm.values.accountAddress;
-  //   accountRequest.description = props.form.accountEditForm.values.accountDescription;
-  //   console.log("form data: " + JSON.stringify(accountRequest));
-  //   this.props.updateAccount(this.props.history,accountRequest);
-  // };
-  
+  renderRateInformation = () => {
+    return (
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Rate Name
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="rateName"
+              component="input"
+              placeholder="Rate Name"
+              className="form-control form-control-sm "
+              type="text"
+              id="rateName"
+            />
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Status
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="rateStatus"
+              component="select"
+              className="form-control form-control-sm"
+              id="rateStatus"
+            >
+              <option />
+              <option value="1">Active</option>
+              <option value="0">InActive</option>
+            </Field>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Rate Cycle
+          </label>
+          <div className="col-sm-4">
+            <Field
+              name="rateCycle"
+              component="select"
+              className="form-control form-control-sm"
+              id="rateCycle"
+            >
+              <option />
+              <option value="0">1-30</option>
+              <option value="1">11-10</option>
+              <option value="2">16-15</option>
+              <option value="3">26-25</option>
+            </Field>
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Local
+          </label>
+          <div className="input-group input-group-sm col-sm-2">
+            <Field
+              name="rateLocal"
+              component="input"
+              placeholder=""
+              className="form-control form-control-sm"
+              type="text"
+              id="rateLocal"
+            />
+            <div className="input-group-append">
+              <span className="input-group-text">฿</span>
+            </div>
+          </div>
+          <div className="col-sm-2">
+            <Field
+              name="rateLocalType"
+              component="select"
+              className="form-control form-control-sm"
+              id="rateLocalType"
+            >
+              <option value="Min">Min</option>
+              <option value="Time">Time</option>
+            </Field>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Long
+          </label>
+          <div className="input-group input-group-sm col-sm-2">
+            <Field
+              name="rateLongDistance"
+              component="input"
+              placeholder=""
+              className="form-control form-control-sm"
+              type="text"
+              id="rateLongDistance"
+            />
+            <div className="input-group-append">
+              <span className="input-group-text">฿</span>
+            </div>
+          </div>
+          <div className="col-sm-2">
+            <Field
+              name="rateLongDistanceType"
+              component="select"
+              className="form-control form-control-sm"
+              id="rateLongDistanceType"
+            >
+              <option value="Min">Min</option>
+              <option value="Time">Time</option>
+            </Field>
+          </div>
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Inter
+          </label>
+          <div className="input-group input-group-sm col-sm-2">
+            <Field
+              name="rateInter"
+              component="input"
+              placeholder=""
+              className="form-control form-control-sm"
+              type="text"
+              id="rateInter"
+            />
+            <div className="input-group-append">
+              <span className="input-group-text ">฿</span>
+            </div>
+          </div>
+          <div className="col-sm-2">
+            <Field
+              name="rateInterType"
+              component="select"
+              className="form-control form-control-sm"
+              id="rateInterType"
+            >
+              <option value="Min">Min</option>
+              <option value="Time">Time</option>
+            </Field>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="text"
+            className="col-sm-2 col-form-label col-form-label-sm"
+          >
+            Description
+          </label>
+          <div className="col-sm-10">
+            <Field
+              name="rateDescription"
+              component="textarea"
+              placeholder="Description"
+              className="form-control form-control-sm"
+              type="text"
+              id="rateDescription"
+            />
+          </div>
+        </div>
+      </form>
+    );
+  };
+
   render() {
     const { result } = this.props.accountEditReducer;
     if (result != null && !this.props.accountEditReducer.isInitialed) {
@@ -66,6 +581,26 @@ class AccountEdit extends Component {
       this.props.change("accountFax", result.fax);
       this.props.change("accountAddress", result.address);
       this.props.change("accountDescription", result.description);
+
+      this.props.change("deviceSn", result.device_sn);
+      this.props.change("deviceName", result.device_name);
+      this.props.change("deviceStatus", result.status_api);
+      this.props.change("deviceType", result.type_api);
+      this.props.change("deviceUrl", result.url_api);
+      this.props.change("deviceUserApi", result.user_api);
+      this.props.change("devicePasswordApi", result.pass_api);
+      this.props.change("deviceNote", result.note_api);
+
+      this.props.change("rateName", result.rate_name);
+      this.props.change("rateCycle", result.rate_cycle);
+      this.props.change("rateStatus", result.rate_status);
+      this.props.change("rateLocal", result.local);
+      this.props.change("rateLocalType", result.local_type);
+      this.props.change("rateLongDistance", result.long_distance);
+      this.props.change("rateLongDistanceType", result.long_distance_type);
+      this.props.change("rateInter", result.inter);
+      this.props.change("rateInterType", result.inter_type);
+      this.props.change("rateNote", result.rete_description);
       this.props.finishInitialization(true);
     }
     const { handleSubmit, pristine, submitting } = this.props;
@@ -122,132 +657,80 @@ class AccountEdit extends Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-sm-12">
-                <div className="card">
+                <div className="card ">
                   <div className="card-header">
-                    <div className="row">
-                        <h3 className="card-title">Account Information</h3>
-                        <div className="card-tools align-right">
-                          <button type="button" className="btn btn-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i className="fa fa-minus"  aria-hidden="true"/>
-                          </button>
-                        </div>
+                    <h5 className="card-title ">Account Information</h5>
+                    <div className="card-tools align-right">
+                      <button
+                        type="button"
+                        className="btn btn-tool"
+                        data-widget="collapse"
+                        data-toggle="tooltip"
+                        title="Collapse"
+                      >
+                        <i className="fa fa-minus" aria-hidden="true" />
+                      </button>
                     </div>
                   </div>
                   <div className="card-body">
-                    <form className="form-horizontal" onSubmit={handleSubmit(this.onClickSubmit)}>
-                      <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Code
-                        </label>
-                        <div className="col-sm-4">
-                          <Field
-                            name="accountCode" component="input" placeholder="Code"
-                            className="form-control form-control-sm" type="text" id="accountCode"
-                          />
-                        </div>
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Name
-                        </label>
-                        <div className="col-sm-4">
-                          <Field 
-                            name="accountName" component="input" placeholder="Name"
-                            className="form-control form-control-sm" type="text" id="accountName"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Status
-                        </label>
-                        <div className="col-sm-4">
-                          <Field name="accountStatus" component="select" className="form-control form-control-sm"  id="accountStatus">
-                          <option />
-                          <option value="1">Active</option>
-                          <option value="0">InActive</option>
-                          </Field>
-                        </div>
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Type
-                        </label>
-                        <div className="col-sm-4">
-                          <Field name="accountType" component="select"  className="form-control form-control-sm" id="accountType" >
-                          <option />
-                          <option value="Retention">Retention</option>
-                          <option value="Government">Government</option>
-                          <option value="Wholesale">Wholesale</option>
-                          </Field>
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Email
-                        </label>
-                        <div className="col-sm-4">
-                          <Field
-                            name="accountEmail" component="input" placeholder="Email"
-                            className="form-control form-control-sm" type="email" id="accountEmail"
-                          />
-                        </div>
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          External ID
-                        </label>
-                        <div className="col-sm-4">
-                          <Field 
-                            name="accountExternalId" component="input" placeholder="External ID"
-                            className="form-control form-control-sm" type="text" id="accountExternalId"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Telephone
-                        </label>
-                        <div className="col-sm-4">
-                          <Field
-                            name="accountTelephone" component="input" placeholder="Telephone"
-                            className="form-control form-control-sm" type="phonenumber" id="accountTelephone"
-                          />
-                        </div>
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Fax
-                        </label>
-                        <div className="col-sm-4">
-                          <Field 
-                            name="accountFax" component="input" placeholder="Fax"
-                            className="form-control form-control-sm" type="phonenumber" id="accountFax"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Address
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            name="accountAddress" component="textarea" placeholder="Address"
-                            className="form-control form-control-sm" type="text" id="accountAddress"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <label htmlFor="text" className="col-sm-2 col-form-label col-form-label-sm">
-                          Description
-                        </label>
-                        <div className="col-sm-10">
-                          <Field 
-                            name="accountDescription" component="textarea" placeholder="Description"
-                            className="form-control form-control-sm" type="text" id="accountDescription"
-                          />
-                        </div>
-                      </div> 
-                    </form>
+                    {this.renderAccountInformation()}
                   </div>
                 </div>
+
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="card">
+                      <div className="card-header">
+                        <h5 className="card-title">{`Device & API Connection`}</h5>
+                        <div className="card-tools">
+                          <button
+                            type="button"
+                            className="btn btn-tool"
+                            data-widget="collapse"
+                            data-toggle="tooltip"
+                            title="Collapse"
+                          >
+                            <i className="fa fa-minus" aria-hidden="true" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        {this.renderApiInformation()}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className=" col-sm-12">
+                    <div className="card">
+                      <div className="card-header">
+                        <h5 className="card-title">Rate Billing Control</h5>
+                        <div className="card-tools">
+                          <button
+                            type="button"
+                            className="btn btn-tool"
+                            data-widget="collapse"
+                            data-toggle="tooltip"
+                            title="Collapse"
+                          >
+                            <i className="fa fa-minus" aria-hidden="true" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        {this.renderRateInformation()}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             
               </div>
             </div>
             {/* /.row */}
           </div>
         </div>
+     
       </div>
     );
   }

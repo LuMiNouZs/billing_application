@@ -47,7 +47,7 @@ class AccountCreate extends Component {
     formData.append("long_distance_type", formValues.rateLongDistanceType);
     formData.append("inter", formValues.rateInter);
     formData.append("inter_type", formValues.rateInterType);
-    formData.append("rete_des", formValues.rateNote);
+    formData.append("rete_description", formValues.rateNote);
 
     this.props.addAccount(
       this.props.history,
@@ -708,11 +708,13 @@ class AccountCreate extends Component {
                     </div>
                   </div>
                 </div>
+             
               </div>
             </div>
             {/* /.row */}
           </div>
         </div>
+     
       </div>
     );
   }
